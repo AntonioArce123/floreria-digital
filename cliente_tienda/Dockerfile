@@ -1,4 +1,6 @@
-FROM node:18
+FROM node:18-bookworm-slim
+
+RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

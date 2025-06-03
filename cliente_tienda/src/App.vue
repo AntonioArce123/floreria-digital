@@ -10,6 +10,7 @@ interface Personal {
   estatus: number
 }
 
+// Variables reactivas
 const personalLista = ref<Personal[]>([])
 const nuevoPersonal = ref<Personal>({
   nombre: '',
@@ -20,6 +21,7 @@ const nuevoPersonal = ref<Personal>({
 
 const personalEditar = ref<Personal | null>(null)
 
+// Funciones async para CRUD
 const obtenerPersonal = async () => {
   try {
     const res = await axios.get('http://localhost:3000/api/personal')
@@ -90,7 +92,7 @@ onMounted(() => {
       </div>
       <div>
         <label>Estatus:</label>
-        <select v-model="nuevoPersonal.estatus">
+        <select v-model.number="nuevoPersonal.estatus">
           <option :value="1">Activo</option>
           <option :value="2">Baja</option>
         </select>
@@ -115,7 +117,7 @@ onMounted(() => {
         </div>
         <div>
           <label>Estatus:</label>
-          <select v-model="personalEditar.estatus">
+          <select v-model.number="personalEditar.estatus">
             <option :value="1">Activo</option>
             <option :value="2">Baja</option>
           </select>
