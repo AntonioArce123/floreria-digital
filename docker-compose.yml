@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  api_tienda:
+    build: ./api_tienda
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api_tienda:/app
+    depends_on:
+      - mysql
+    networks:
+      - floreria_net
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: ejemplo123
+      DB_NAME: floreria
+
+  cliente_tienda:
+    build: ./cliente_tienda
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./cliente_tienda:/app   # 👈 Esta línea es clave
+    networks:
+      - floreria_net
+    stdin_open: true
+    tty: true
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ejemplo123
+      MYSQL_DATABASE: floreria
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - floreria_net
+
+networks:
+  floreria_net:
+
+volumes:
+  db_data:
